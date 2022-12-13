@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "type": "cargo",
+            "cargoArgs": ["run"],
+            "name": "Run",
+        },
+        {
+            "type": "cargo",
+            "cargoArgs": ["run"],
+            "executableArgs": ["--training_mode"],
+            "name": "Run in training mode",
+        },
+        {
+            "type": "cargo",
+            "cargoArgs": ["test"],
+            "name": "Test",
+        },
+    ]
+}
