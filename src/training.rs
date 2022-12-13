@@ -16,9 +16,9 @@ struct TrainingDataEntry<'a> {
 /// # Errors
 /// This function can return an error if it fails to read or write to the training data JSON file
 /// or if it fails to deserialize or serialize.
-fn add_entry(entry: TrainingDataEntry) -> Result<(), std::io::Error> {
+fn add_entry(entry: TrainingDataEntry, file_path: &str) -> Result<(), std::io::Error> {
     // Read file contents
-    let file_contents = read_to_string(FILE_PATH)?;
+    let file_contents = read_to_string(file_path)?;
     // Deserialize file contents
     let mut training_data: Vec<TrainingDataEntry> = from_str(&file_contents)?;
 
@@ -29,8 +29,41 @@ fn add_entry(entry: TrainingDataEntry) -> Result<(), std::io::Error> {
     let serialized_training_data = to_string_pretty(&training_data)?;
 
     // Write serializde training data to file
-    write(FILE_PATH, serialized_training_data)?;
+    write(file_path, serialized_training_data)?;
 
     // Function completed successfully, return Ok
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use tempfile::tempdir;
+    use std::fs::{ write, read_to_string };
+
+    #[test]
+    fn add_entry_test() {
+        let dir = tempdir().unwrap();
+        let file_path = dir.path().join(FILE_PATH);
+
+        write(&file_path, "[]").unwrap();
+
+        add_entry(
+            TrainingDataEntry {
+                prompt: "Template: Hello?\nResponse: ",
+                completions: " Hello.\n",
+            },
+            file_path.to_str().unwrap(),
+        ).unwrap();
+
+        assert_eq!(
+            read_to_string(file_path).unwrap(),
+"[
+  {
+    \"prompt\": \"Template: Hello?\\nResponse: \",
+    \"completions\": \" Hello.\\n\"
+  }
+]",
+        );
+    }
 }
