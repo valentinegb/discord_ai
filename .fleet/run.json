@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "cargo",
+            "cargoArgs": ["run"],
+            "name": "Start bot",
+        },
+        {
+            "type": "cargo",
+            "cargoArgs": ["test"],
+            "name": "Test",
+        },
+    ]
+}
