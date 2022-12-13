@@ -39,7 +39,6 @@ fn add_entry(entry: TrainingDataEntry, file_path: &str) -> Result<(), std::io::E
 mod tests {
     use super::*;
     use tempfile::tempdir;
-    use std::fs::{ write, read_to_string };
 
     #[test]
     fn add_entry_test() {
