@@ -8,9 +8,13 @@ and what I want the end product to be like.
 The goal is to have an AI that you can invoke via a slash command from a Discord bot. Something like this:
 
 > **robynn:** ratio
+>
 > **valentinegb:** \*gasp* how dare you
+>
 > **valentinegb:** /prompt AI-bert reverse their ratio
+>
 > **AI-bert:** Ratio.
+>
 > **robynn:** bruh what the
 
 The AI will only be invoked with that command, it shouldn't respond to anything otherwise.
