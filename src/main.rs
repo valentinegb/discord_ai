@@ -1,6 +1,3 @@
-// This is where the Discord bot code goes, the interface between the AI and the users.
-// It's like the "frontend".
-
 use dotenv::dotenv;
 use std::env;
 use serenity::{
@@ -18,6 +15,7 @@ use serenity::{
 };
 
 mod commands;
+mod openai;
 
 struct Handler;
 
