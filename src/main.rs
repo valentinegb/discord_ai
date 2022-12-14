@@ -38,30 +38,30 @@ impl EventHandler for Handler {
         println!("{} is online", data_about_bot.user.name);
 
         if cfg!(debug_assertions) {
-            let debug_guild = GuildId(DEBUG_GUILD.parse().expect("Could not parse DEBUG_GUILD"));
+            let debug_guild = GuildId(DEBUG_GUILD.parse().expect("DEBUG_GUILD constant should be defined as a string of numbers"));
 
             debug_guild.set_application_commands(ctx.http, |commands| {
                 commands.create_application_command(|command| commands::invoke::register(command))
-            }).await.expect("Failed to set guild commands");
+            }).await.expect("application commands should be set in guild");
         } else {
             Command::set_global_application_commands(ctx.http, |commands| {
                 commands.create_application_command(|command| commands::invoke::register(command))
-            }).await.expect("Failed to set global commands");
+            }).await.expect("application commands should be set globally");
         }
     }
 }
 
 #[tokio::main]
 async fn main() {
-    dotenv().expect("Failed to load .env file");
+    dotenv().expect(".env file should load");
 
     let mut client = Client::builder(
-        env::var("DISCORD_BOT_TOKEN").expect("DISCORD_BOT_TOKEN env var not found"),
+        env::var("DISCORD_BOT_TOKEN").expect("env var DISCORD_BOT_TOKEN should be defined in .env"),
         GatewayIntents::empty(),
     )
         .event_handler(Handler)
         .await
-        .expect("Failed to build client");
+        .expect("client should build");
 
     // Print error without panicking
     if let Err(why) = client.start().await {

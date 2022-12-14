@@ -8,31 +8,25 @@ use serenity::{
 };
 
 pub async fn run(ctx: Context, command: ApplicationCommandInteraction) {
-    command.create_interaction_response(ctx.http, |response| {
-        response.interaction_response_data(|message| {
-            for option in &command.data.options {
-                if option.name == "prompt" {
-                    let prompt = option.value.as_ref().expect("Expected value").as_str().expect("Expected string");
+    // Show "..." on Discord
+    command.defer(&ctx.http).await.expect("should not error");
 
-                    return message.content(prompt);
-                }
-            }
+    // Send prompt to AI
+    todo!();
 
-            message.content("Error")
-        })
-    })
-        .await.expect("Failed to create interaction response");
+    // Respond with completion
+    todo!();
 }
 
 pub fn register(command: &mut CreateApplicationCommand) -> &mut CreateApplicationCommand {
     command
         .name("invoke")
-        .description("Placeholder description")
+        .description("Invoke upon the mystically powers of Albert.")
         .create_option(|option| {
             option
                 .kind(CommandOptionType::String)
                 .name("prompt")
-                .description("Placeholder description")
+                .description("What is it you wish you know?")
                 .required(true)
                 .max_length(1024)
         })
