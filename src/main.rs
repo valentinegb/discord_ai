@@ -35,13 +35,16 @@ impl EventHandler for Handler {
     async fn ready(&self, ctx: Context, data_about_bot: Ready) {
         println!("{} is online", data_about_bot.user.name);
 
-        if cfg!(debug_assertions) {
-            let debug_guild = GuildId(DEBUG_GUILD.parse().expect("DEBUG_GUILD constant should be defined as a string of numbers"));
+        let debug_guild = GuildId(DEBUG_GUILD.parse().expect("DEBUG_GUILD constant should be defined as a string of numbers"));
 
+        if cfg!(debug_assertions) {
             debug_guild.set_application_commands(ctx.http, |commands| {
                 commands.create_application_command(|command| commands::invoke::register(command))
             }).await.expect("application commands should be set in guild");
         } else {
+            debug_guild.set_application_commands(&ctx.http, |commands| commands).await
+                .expect("guild commands should be cleared for the debug guild");
+
             Command::set_global_application_commands(ctx.http, |commands| {
                 commands.create_application_command(|command| commands::invoke::register(command))
             }).await.expect("application commands should be set globally");
