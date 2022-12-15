@@ -23,7 +23,7 @@ pub async fn run(ctx: Context, command: ApplicationCommandInteraction) {
     // Send prompt to AI
     let completion = create_completion(CreateCompletionRequestBody {
         model: "text-davinci-003",
-        prompt: Some(&format!("The following is the message history for a large language model Discord bot and some users.\n\n{prompt}\nAI-bert: ")),
+        prompt: Some(&format!("The following is the message history for a large language model Discord bot called \"AI-bert\" (a play on \"AI\" and \"Albert\") and some users.\n\n{prompt}\nAI-bert: ")),
         max_tokens: Some(1024),
         temperature: Some(0.9),
         user: Some(&command.user.id.to_string()),
