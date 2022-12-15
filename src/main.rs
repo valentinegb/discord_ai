@@ -55,7 +55,7 @@ async fn main() {
 
     let mut client = Client::builder(
         env::var("DISCORD_BOT_TOKEN").expect("env var DISCORD_BOT_TOKEN should be defined in .env"),
-        GatewayIntents::empty(),
+        GatewayIntents::MESSAGE_CONTENT | GatewayIntents::GUILD_MESSAGES | GatewayIntents::DIRECT_MESSAGES,
     )
         .event_handler(Handler)
         .await
