@@ -133,7 +133,7 @@ pub async fn create_completion(body: CreateCompletionRequestBody<'_>) -> CreateC
         .header(AUTHORIZATION, format!(
             "Bearer {}",
             env::var("OPENAI_API_KEY")
-                .expect("env var OPENAI_API_KEY should be defined in .env"),
+                .expect("env var OPENAI_API_KEY should be defined"),
         ))
         .json(&body)
         .send().await
