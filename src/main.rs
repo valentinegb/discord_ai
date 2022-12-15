@@ -51,7 +51,9 @@ impl EventHandler for Handler {
 
 #[tokio::main]
 async fn main() {
-    dotenv().expect(".env file should load");
+    if cfg!(debug_assertions) {
+        dotenv().expect(".env file should load");
+    }
 
     let mut client = Client::builder(
         env::var("DISCORD_BOT_TOKEN").expect("env var DISCORD_BOT_TOKEN should be defined in .env"),
